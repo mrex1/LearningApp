@@ -6,83 +6,47 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import UserInfo from './components/UserInfo'
+import ActivityHistory from './components/ActivityHistory'
 
 export default class Profile extends Component {
-
+  state={
+    ActivityList:[{title:"some title",details:"some details"},{title:"some title",details:"some details"},{title:"some title",details:"some details"}]
+  ,userinfo:{
+    username:"someone",
+    useremail:"someone@some.com",
+    userimg:{uri:"https://newmusicshelf.com/wp-content/uploads/blank-profile-picture.png"}
+  }
+  }
+  
   render() {
+    const {ActivityList,userinfo} = this.state
     return (
       <View style={styles.container}>
-          <View style={styles.header}></View>
-          <Image style={styles.avatar} source={{uri: 'https://bootdey.com/img/Content/avatar/avatar6.png'}}/>
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>User Name</Text>
-              <Text style={styles.description}>User info</Text>
-              
-              <TouchableOpacity style={styles.buttonContainer} onPress={()=>{this.props.go('Page2')}}>
-                <Text>Go</Text>  
-              </TouchableOpacity> 
-            </View>
-        </View>
+          <UserInfo {...userinfo}/>
+            <TouchableOpacity style={styles.activityHeader} onPress={()=>{let newlist=[...ActivityList,...ActivityList];this.setState({ActivityList:newlist})}}>
+              <Text style={styles.activityHeaderText}>Manage activity history</Text> 
+            </TouchableOpacity>
+            <ActivityHistory
+              ActivityList={ActivityList}
+              /> 
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header:{
-    backgroundColor: "black",
-    height:200,
+  container:{
+    flex:1
   },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    borderWidth: 4,
-    borderColor: "white",
-    marginBottom:10,
-    alignSelf:'center',
-    position: 'absolute',
-    marginTop:130
+  activityHeader: {
+    padding: 5,
+    width:'100%',
+    backgroundColor: "orange",
   },
-  name:{
-    fontSize:22,
-    color:"#FFFFFF",
-    fontWeight:'600',
-  },
-  body:{
-    marginTop:40,
-  },
-  bodyContent: {
-    flex: 1,
-    alignItems: 'center',
-    padding:30,
-  },
-  name:{
-    fontSize:28,
-    color: "#696969",
-    fontWeight: "600"
-  },
-  info:{
-    fontSize:16,
-    color: "#00BFFF",
-    marginTop:10
-  },
-  description:{
-    fontSize:16,
-    color: "#696969",
-    marginTop:10,
-    textAlign: 'center'
-  },
-  buttonContainer: {
-    marginTop:10,
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:250,
-    borderRadius:30,
-    backgroundColor: "#00BFFF",
-  },
+  activityHeaderText:{
+    textAlign: 'center',
+    color:'grey',
+    fontWeight:'bold'
+  }
 });
