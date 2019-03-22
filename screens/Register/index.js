@@ -4,44 +4,39 @@ import {
   Text,
   View,
   TextInput,
+  Button,
   TouchableHighlight,
   Image,
+  Alert
 } from 'react-native';
 
-export default class LoginView extends Component {
+export default class Register extends Component {
 
+  constructor(props) {
+    super(props);
     state = {
-        email   : '',
-        password: '',
+      fullName: '',
+      email   : '',
+      password: '',
     }
-
-  login(user,pw){
-    this.props.go('Main')
   }
 
-  validator = () => {
-      let email=this.state.email
-      if(email){
-        var isValid = /^.+@[^.]+\..+/.test(email)
-        if(isValid)this.login()
-        else{
-            alert('invalid input')
-        }
-      }
-      else{
-        alert('no input')
-      }
+  onClickListener = (viewId) => {
+    Alert.alert("Alert", "Button pressed "+viewId);
   }
 
   render() {
-    const navigateTo = this.props.go
     return (
       <View style={styles.container}>
-      <Image 
-      style={styles.logo}
-      resizeMethod='auto'
-      resizeMode='contain' 
-      source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Logo_TV_2015.svg/1200px-Logo_TV_2015.svg.png'}}/>
+        <View style={styles.inputContainer}>
+          <Image style={styles.inputIcon} source={{uri: 'https://image.flaticon.com/icons/png/512/97/97895.png'}}/>
+          <TextInput style={styles.inputs}
+              placeholder="Full name"
+              keyboardType="email-address"
+              underlineColorAndroid='transparent'
+              onChangeText={(fullName) => this.setState({fullName})}/>
+        </View>
+
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{uri: 'https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/mail-24-128.png'}}/>
           <TextInput style={styles.inputs}
@@ -60,16 +55,8 @@ export default class LoginView extends Component {
               onChangeText={(password) => this.setState({password})}/>
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.validator('login')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => {}}>
-            <Text style={styles.otherText}>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => {navigateTo('Register')}}>
-            <Text style={styles.otherText}>Register</Text>
+        <TouchableHighlight style={[styles.buttonContainer, styles.signupButton]} onPress={() => this.onClickListener('sign_up')}>
+          <Text style={styles.signUpText}>Sign up</Text>
         </TouchableHighlight>
       </View>
     );
@@ -77,55 +64,54 @@ export default class LoginView extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+    container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-  },
-  logo:{
+    },
+    logo:{
     width: '80%',
     height:'40%',
     marginBottom:'10%',
     tintColor:'white'
-  },
-  inputContainer: {
-      borderBottomColor: '#F5FCFF',
-      backgroundColor: 'rgba(255,255,255,0.7)',
-      borderRadius:23,
-      width:250,
-      height:46,
-      marginBottom:20,
-      flexDirection: 'row',
-      alignItems:'center'
-  },
-  inputs:{
-      height:46,
-      marginLeft:16,
-      flex:1,
-  },
-  inputIcon:{
+    },
+    inputContainer: {
+        borderBottomColor: '#F5FCFF',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        borderRadius:23,
+        width:250,
+        height:46,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+    inputs:{
+        height:46,
+        marginLeft:16,
+        flex:1,
+    },
+    inputIcon:{
     width:30,
     height:30,
     marginLeft:15,
     justifyContent: 'center',
-  },
-  buttonContainer: {
+    tintColor:'black'
+    },
+    buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:'3%',
     width:250,
     borderRadius:23,
-  },
-  loginButton: {
+    },
+    signupButton: {
     height:46,
     backgroundColor: "#f46242",
-  },
-  loginText: {
+    },
+    signUpText: {
     color: 'white',
-  },
-  otherText:{
-    color: '#f46242'
-  }
+    }
 });
+ 
